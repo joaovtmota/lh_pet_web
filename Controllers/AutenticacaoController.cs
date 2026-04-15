@@ -143,8 +143,20 @@ namespace LH_PET_WEB.Controllers
                 string mensagem = $"Olá {usuario.Nome},!\n\nUma redefinição de senha foi solicitada.\nSua nova senha temporária é: {senhaTemporaria}\n\nVocê será solicitado a alterá-la no próximo acesso";
                 
                 bool emailEnviado = await _emailService.EnviarEmailAsync(usuario.Email, "Recuperação de Senha - VetPlus Care", mensagem);
-                if(!emailE)
+                if(!emailEnviado)
+                {
+                    TempData["Erro"] = "Serviço de e-mail indisponível. Contate o suporte para redefinir sua senha.";
+                    return RedictToAction("Login");
+                }
             }
+            TempData["Sucesso"] = "Se o e-mail estiver cadastrado, você receberá as instruções em breve";
+            return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult AcessoNegado()
+        {
+            return View();
         }
     }
 }
