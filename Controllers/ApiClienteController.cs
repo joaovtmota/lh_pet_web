@@ -29,7 +29,9 @@ namespace LH_PET_WEB.Controllers
             int usuarioId = int.Parse(usuarioIdClaim);
             return await _contexto.CLientes.FirstOrDefaultAsync(c => c.UsuarioId == usuarioId);
 
-            [HttpGet("perfil")]
+            
+        }
+        [HttpGet("perfil")]
             public async Task<IActionResult> ObterPerfil()
             {
                 var client = await ObterClienteLogadoAsync();
@@ -70,9 +72,9 @@ namespace LH_PET_WEB.Controllers
                     Nome = p.Nome,
                     Especie = p.Especie,
                     Raca = p.Raca,
-                    DataNascimento = p.DataNascimento.ToString("yyyy-MM-dd");
+                    DataNascimento = p.DataNascimento.ToString("yyyy-MM-dd"),
                     Idade = p.Idade
-                })
+                });
                 return Ok(petsRetorno);
             }
 
@@ -194,8 +196,7 @@ namespace LH_PET_WEB.Controllers
                     if (!temConflito) horariosLivres.Add(atual.ToString(@"hh\:mm"));
                     atual = atual.Add(duracao);
                 }
-                return Ok(horariosLivres)
+                return Ok(horariosLivres);
             }
-        }
     }    
 }

@@ -1,4 +1,4 @@
-using Microsft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
@@ -29,16 +29,16 @@ namespace LH_PET_WEB.Controllers
 
             try
             {
-                var usuarioExistente = await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Email == dto.Email);
+                var usuarioExistente = await _contexto.Usuarios.AnyAsync(u => u.Email == dto.Email);
                 if (usuarioExistente) return BadRequest(new { Mensagem = "Email já está em uso." });
-                var cpfExiste = await _contexto.Usuarios.FirstOrDefaultAsync(c => c.CPF == dto.CPF);
+                var cpfExiste = await _contexto.Usuarios.AnyAsync(c => c.CPF == dto.CPF);
                 if (cpfExiste) return BadRequest(new { Mensagem = "CPF já cadastrado." });
 
-                var novo usuario = new Usuario
+                var novoUsuario = new Usuario
                 {
                     Nome = dto.Nome,
                     Email = dto.Email,
-                    SenhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha)
+                    SenhaHash = BCrypt.Net.BCrypt.HashPassword(dto.Senha),
                     Perfil = "Cliente",
                     Ativo = true,
                     SenhaTemporaria = false,

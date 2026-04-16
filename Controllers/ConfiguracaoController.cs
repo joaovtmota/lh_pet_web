@@ -33,7 +33,7 @@ namespace LH_PET_WEB.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Salvar(ConfiguracaoClinica model. List<string>DiasSelecionados)
+        public async Task<IActionResult> Salvar(ConfiguracaoClinica model, List<string>DiasSelecionados)
         {
             model.DiasTrabalho = string.Join(",", DiasSelecionados);
 
