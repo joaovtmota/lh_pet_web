@@ -49,7 +49,7 @@ namespace LH_PET_WEB.Controllers
                 {
                     string pastaDestino = Path.Combine(_hostEnvironment.WebRootPath, "uploads", "produtos");
                     Directory.CreateDirectory(pastaDestino);
-                    string nomeArquivoUnico = Guild.NewGuid().ToString() + "_" + foto.FileName;
+                    string nomeArquivoUnico = Guid.NewGuid().ToString() + "_" + foto.FileName;
                     string caminhoCompleto = Path.Combine(pastaDestino, nomeArquivoUnico);
 
                     using (var stream = new FileStream(caminhoCompleto, FileMode.Create))
@@ -98,7 +98,7 @@ namespace LH_PET_WEB.Controllers
                         string pastaDestino = Path.Combine(_hostEnvironment.WebRootPath, "uploads", "produtos");
                         Directory.CreateDirectory(pastaDestino);
 
-                        string nomeArquivoUnico = Guild.NewGuid().ToString() + "_" + foto.FileName;
+                        string nomeArquivoUnico = Guid.NewGuid().ToString() + "_" + foto.FileName;
                         string caminhoCompleto = Path.Combine(pastaDestino, nomeArquivoUnico);
 
                         using (var stream = new FileStream(caminhoCompleto, FileMode.Create))

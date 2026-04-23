@@ -6,7 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using LH_PET_WEB.Data;
 using LH_PET_WEB.Models;
-using LH_PET_WEB.ViewModels;
+using LH_PET_WEB.Models.ViewModels;
 
 namespace LH_PET_WEB.Controllers
 {
@@ -31,7 +31,7 @@ namespace LH_PET_WEB.Controllers
             {
                 var usuarioExistente = await _contexto.Usuarios.AnyAsync(u => u.Email == dto.Email);
                 if (usuarioExistente) return BadRequest(new { Mensagem = "Email já está em uso." });
-                var cpfExiste = await _contexto.Usuarios.AnyAsync(c => c.CPF == dto.CPF);
+                var cpfExiste = await _contexto.Clientes.AnyAsync(c => c.CPF == dto.CPF);
                 if (cpfExiste) return BadRequest(new { Mensagem = "CPF já cadastrado." });
 
                 var novoUsuario = new Usuario
@@ -71,7 +71,7 @@ namespace LH_PET_WEB.Controllers
 
             try
             {
-                var usuario = await _contexto.Usuarios.FistOrDefaultAsync(u => u.Email == dto.Email);
+                var usuario = await _contexto.Usuarios.FirstOrDefaultAsync(u => u.Email == dto.Email);
 
                 if (usuario == null || !BCrypt.Net.BCrypt.Verify(dto.Senha, usuario.SenhaHash))
                 {
@@ -86,7 +86,7 @@ namespace LH_PET_WEB.Controllers
                 var key = Encoding.ASCII.GetBytes(jwtKey);
                 var tokenDescriptor = new SecurityTokenDescriptor 
                 {
-                    Subject = new ClaimsIdentity(new Claim[]
+                    Subject = new ClaimsIdentity(new []
                     {
                         new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
                         new Claim(ClaimTypes.Name, usuario.Nome),

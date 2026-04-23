@@ -5,6 +5,7 @@ using LH_PET_WEB.Data;
 using LH_PET_WEB.Models;
 using LH_PET_WEB.Models.ViewModels;
 using LH_PET_WEB.Services;
+using BCrypt.Net;
 
 namespace LH_PET_WEB.Controllers
 {

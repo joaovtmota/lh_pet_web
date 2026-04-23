@@ -23,7 +23,7 @@ namespace LH_PET_WEB.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            if(User.Idenitity is { IsAuthenticated: true }) return RedirectToAction("Index", "Painel");
+            if(User.Identity is { IsAuthenticated: true }) return RedirectToAction("Index", "Painel");
             return View(new LoginViewModel());
         }
 
@@ -62,7 +62,7 @@ namespace LH_PET_WEB.Controllers
         public IActionResult RedefinirSenha()
         {
             if(TempData["ResetUsuarioId"] == null) return RedirectToAction("Login");
-            tempData.Keep("ResetUsuarioId");
+            TempData.Keep("ResetUsuarioId");
             return View(new RedefinirSenhaViewModel());
         }
 
@@ -74,7 +74,7 @@ namespace LH_PET_WEB.Controllers
 
             if(!ModelState.IsValid)
             {
-                tempData.Keep("ResetUsuarioId");
+                TempData.Keep("ResetUsuarioId");
                 return View(model);
             } 
 
@@ -133,7 +133,7 @@ namespace LH_PET_WEB.Controllers
 
             if(usuario != null)
             {
-                string senhaTemporaria = Guild.NewGuid().ToString().Substring(0, 8);
+                string senhaTemporaria = Guid.NewGuid().ToString().Substring(0, 8);
                 usuario.SenhaHash = BCrypt.Net.BCrypt.HashPassword(senhaTemporaria);
                 usuario.SenhaTemporaria = true;
 
@@ -146,7 +146,7 @@ namespace LH_PET_WEB.Controllers
                 if(!emailEnviado)
                 {
                     TempData["Erro"] = "Serviço de e-mail indisponível. Contate o suporte para redefinir sua senha.";
-                    return RedictToAction("Login");
+                    return RedirectToAction("Login");
                 }
             }
             TempData["Sucesso"] = "Se o e-mail estiver cadastrado, você receberá as instruções em breve";

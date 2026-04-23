@@ -15,7 +15,7 @@ namespace LH_PET_WEB.Controllers
     {
         private readonly ContextoBanco _contexto;
 
-        public ReltoriosController(ContextoBanco contexto)
+        public RelatoriosController(ContextoBanco contexto)
         {
             _contexto = contexto;
         }
@@ -26,7 +26,7 @@ namespace LH_PET_WEB.Controllers
             var InicioDoMes = new DateTime(hoje.Year, hoje.Month, 1);
 
             var vendasMes = await _contexto.Vendas
-                .Where(v => v.DataVenda >= inicioDoMes)
+                .Where(v => v.DataVenda >= InicioDoMes)
                 .ToListAsync();
 
             var vendasHoje = vendasMes
@@ -40,19 +40,19 @@ namespace LH_PET_WEB.Controllers
             var topProdutos = await _contexto.ItensVenda
                 .Include(i => i.Produto)
                 .Include(i => i.Venda)
-                .Where(i => i.Venda.DataVenda >= inicioDoMes)
+                .Where(i => i.Venda.DataVenda >= InicioDoMes)
                 .GroupBy(i => new { i.ProdutoId, i.Produto!.Nome })
                 .Select(g => new TopProdutoViewModel
                 {
                     NomeProduto = g.Key.Nome,
                     QuantidadeVendida = g.Sum(i => i.Quantidade),
-                    ValorTotalVendido = g.Sum(i => i.Quantidade * i.PrecoUnitario)
+                    ValorTotalGerado = g.Sum(i => i.Quantidade * i.PrecoUnitario)
                 })
                 .OrderByDescending(p => p.QuantidadeVendida)
                 .Take(5)
                 .ToListAsync();
 
-            var viewModel = new RelatoriosDashboardViewModel
+            var viewModel = new RelatorioDashboardViewModel
             {
                 FaturamentoHoje = vendasHoje.Sum(v => v.Total),
                 FaturamentoMes = vendasMes.Sum(v => v.Total),

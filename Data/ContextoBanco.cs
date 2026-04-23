@@ -30,7 +30,7 @@ namespace LH_PET_WEB.Data
             modelBuilder.Entity<Venda>().Property(v => v.Total).HasPrecision(10, 2); 
             modelBuilder.Entity<ItemVenda>().Property(i => i.PrecoUnitario).HasPrecision(10, 2); 
             modelBuilder.Entity<Usuario>().HasIndex(u => u.Email).IsUnique(); 
-            modelBuilder.Entity<Cliente>().HasIndex(c => c.Cpf).IsUnique(); 
+            modelBuilder.Entity<Cliente>().HasIndex(c => c.CPF).IsUnique(); 
             modelBuilder.Entity<Fornecedor>().HasIndex(f => f.Cnpj).IsUnique(); 
             modelBuilder.Entity<Atendimento>().HasIndex(a => a.AgendamentoId).IsUnique();
         }

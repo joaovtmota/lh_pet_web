@@ -27,14 +27,26 @@ namespace LH_PET_WEB.Controllers
             if (string.IsNullOrEmpty(usuarioIdClaim)) return null;
 
             int usuarioId = int.Parse(usuarioIdClaim);
-            return await _contexto.CLientes.FirstOrDefaultAsync(c => c.UsuarioId == usuarioId);
+            return await _contexto.Clientes.FirstOrDefaultAsync(c => c.UsuarioId == usuarioId);
 
             
         }
         [HttpGet("perfil")]
-            public async Task<IActionResult> ObterPerfil()
+        public async Task<IActionResult> ObterPerfil()
+        {
+            var cliente = await ObterClienteLogadoAsync(); if(cliente == null) return NotFound();
+            var usuario = await _contexto.Usuarios.FindAsync(cliente.UsuarioId);
+            return Ok(new {
+                nome = cliente.Nome,
+                cpf = cliente.CPF,
+                telefone = cliente.Telefone,
+                email = usuario?.Email
+            });
+        }
+        [HttpPut("perfil")]
+            public async Task<IActionResult> AtualizarPerfil([FromBody] ApiRegistroDTO dto)
             {
-                var client = await ObterClienteLogadoAsync();
+                var cliente = await ObterClienteLogadoAsync();
                 if (cliente == null) return Unauthorized();
 
                 var usuario = await _contexto.Usuarios.FindAsync(cliente.UsuarioId);
@@ -66,20 +78,20 @@ namespace LH_PET_WEB.Controllers
                 var pets = await _contexto.Pets.Where(p => p.ClienteId == cliente.Id).ToListAsync();
                 var petsBanco = await _contexto.Pets.Where(p => p.ClienteId == cliente.Id).ToListAsync();
 
-                var petsRetorno = petsBanco.Select(p => new PetViewModel
+                var petsRetorno = petsBanco.Select(p => new 
                 {
                     Id = p.Id,
                     Nome = p.Nome,
                     Especie = p.Especie,
                     Raca = p.Raca,
                     DataNascimento = p.DataNascimento.ToString("yyyy-MM-dd"),
-                    Idade = p.Idade
+                    Idade = p.IdadeCalculada
                 });
                 return Ok(petsRetorno);
             }
 
             [HttpPost("pets")]
-            public async Task<IActionResult> AdicionarPet([FromBody] ApitPetDTO dto)
+            public async Task<IActionResult> AdicionarPet([FromBody] ApiPetDTO dto)
             {
                 var cliente = await ObterClienteLogadoAsync();
                 if (cliente == null) return Unauthorized();

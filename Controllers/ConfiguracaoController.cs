@@ -62,6 +62,7 @@ namespace LH_PET_WEB.Controllers
                 TempData["Sucesso"] = "Configurações da agemda atualizadas com sucesso!";
                 return RedirectToAction(nameof(Index));
             }
+            return View("Index", model);
         }
     }
 }

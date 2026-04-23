@@ -39,7 +39,7 @@ namespace LH_PET_WEB.Controllers
                 return BadRequest("O carrinho está vazio.");
             }
             var usuarioIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if(string.INullOrEmpty(usuarioIdClaim))
+            if(string.IsNullOrEmpty(usuarioIdClaim))
             {
                 return Unauthorized("Usuário não identicado.");
             }
@@ -98,7 +98,7 @@ namespace LH_PET_WEB.Controllers
 
                 return Ok(new { Mensagem = "Venda finalizada com sucesso!", VendaId = novaVenda.Id });
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 await transaction.RollbackAsync();
                 return BadRequest(new { mensagem = ex.Message});

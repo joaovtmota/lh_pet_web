@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
+using System.Net;
+using System.Net.Mail;
 
 namespace LH_PET_WEB.Services
 {
@@ -13,7 +15,7 @@ namespace LH_PET_WEB.Services
 
     public class EmailService : IEmailService
     {
-        private readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuracao;
 
         public EmailService(IConfiguration configuracao) 
         { 

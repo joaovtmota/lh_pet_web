@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "nTO6x2tugK8=",
+  "dgSpecHash": "OtunDvc1G6Q=",
   "success": true,
   "projectFilePath": "C:\\Users\\ead_dev\\Documents\\João_Victor\\LH_PET_WEB\\LH_PET_WEB.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ead_dev\\.nuget\\packages\\bcrypt.net-next\\4.1.0\\bcrypt.net-next.4.1.0.nupkg.sha512",
     "C:\\Users\\ead_dev\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\9.0.0\\microsoft.aspnetcore.authentication.jwtbearer.9.0.0.nupkg.sha512",
     "C:\\Users\\ead_dev\\.nuget\\packages\\microsoft.entityframeworkcore\\9.0.0\\microsoft.entityframeworkcore.9.0.0.nupkg.sha512",
     "C:\\Users\\ead_dev\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\9.0.0\\microsoft.entityframeworkcore.abstractions.9.0.0.nupkg.sha512",
